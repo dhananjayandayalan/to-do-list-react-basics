@@ -1,11 +1,12 @@
 import React from "react";
-import ToDo from "./Components/ToDo";
+import './App.css';
+import TodoList from "./components/TodoList";
 
 const App = () => {
     return (
-        <React.Fragment>
-            <ToDo />
-        </React.Fragment>
+        <div className='todo-app'>
+            <TodoList />
+        </div>
     );
 };
 
