@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ToDo.css";
 
-const ListContent = (props) => {
+const ListContent = props => {
     return (
         <React.Fragment>
             <div>
@@ -11,24 +11,26 @@ const ListContent = (props) => {
                 <code>{props.date}</code>
             </div>
             <div>
-                <button onClick={() => alert("Clicked")}>Edit</button>
+                <button onClick={props.onEdit}>Edit</button>
             </div>
             <div>
-                <button onClick={() => alert("Clicked")}>Delete</button>
+                <button onClick={props.onDelete}>Delete</button>
             </div>
         </React.Fragment>
     );
 };
 
-const List = (props) => {
+const List = props => {
     return (
         <React.Fragment>
             {props.tasks.length !== 0 ? (
-                props.tasks.map((task) => (
+                props.tasks.map(task => (
                     <ListContent
                         taskName={task.task}
                         date={task.date}
-                        key={task.id}
+                        key={task.id} 
+                        onEdit={() => props.onEdit(task.id, task.task)} 
+                        onDelete={() => props.onDelete(task.id)}
                     />
                 ))) : 
                 (<p>No Tasks</p>)}
@@ -37,7 +39,7 @@ const List = (props) => {
     );
 };
 
-const TodoInput = (props) => {
+const TodoInput = props => {
     const [enteredTask, setEnteredTask] = useState("");
 
     const taskHandler = (event) => {
@@ -46,13 +48,15 @@ const TodoInput = (props) => {
         // console.log(enteredTask);
     };
 
-    const submitHandler = (event) => {
+
+
+    const submitHandler = event => {
         event.preventDefault();
         if (enteredTask.length !== 0 && enteredTask.trim().length !== 0) {
             const taskData = {
                 id: parseInt(Math.random() * 100000),
                 task: enteredTask.trim(),
-                date: new Date().toDateString(),
+                date: new Date().toLocaleDateString(),
             };
             props.onAddData(taskData);
             setEnteredTask("");
@@ -74,10 +78,10 @@ const TodoInput = (props) => {
     );
 };
 
-const ToDo = (props) => {
+const ToDo = props => {
     const [tasks, setTasks] = useState([]);
 
-    const addDataHandler = (task) => {
+    const addDataHandler = task => {
         if (tasks.length === 0) {
             setTasks([task]);
         } else {
@@ -86,13 +90,28 @@ const ToDo = (props) => {
         console.log(task);
     };
 
+    const editDataHandler = (key, data) => {
+        setTasks(data);
+        deleteHandler(key);
+    };
+
+    const editHandler = (key, data) => {
+        editDataHandler(key, data);
+    };
+
+    const deleteHandler = (key) => {
+        const filteredData = tasks.filter((task) => key !== task.id);
+        setTasks([...filteredData]);
+
+    };
+
     return (
         <React.Fragment>
             <div>
-                <TodoInput onAddData={addDataHandler} />
+                <TodoInput onAddData={addDataHandler} onEditData={(data) => editDataHandler(data)}/>
             </div>
             <div>
-                <List tasks={tasks} />
+                <List tasks={tasks} onEdit={(key, data) => editHandler(key, data)} onDelete={(key) => deleteHandler(key)} />
             </div>
         </React.Fragment>
     );
