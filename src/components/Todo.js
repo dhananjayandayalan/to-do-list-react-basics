@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
+import "./Todo.css";
 
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     const [edit, setEdit] = useState({
@@ -7,35 +8,37 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         value: "",
     });
 
-    const submitUpdate = value => {
+    const submitUpdate = (value) => {
         updateTodo(edit.id, value);
         setEdit({
             id: null,
-            value: ''
-        })
-    }
+            value: "",
+        });
+    };
 
-    if(edit.id) {
-        return <TodoForm edit={edit} onSubmit={submitUpdate} />
+    if (edit.id) {
+        return <TodoForm edit={edit} onSubmit={submitUpdate} />;
     }
 
     return todos.map((todo, index) => (
-        <div
-            className={todo.isComplete ? "todo-row complete" : "todo-row"}
-            key={index}
-        >
-            <div key={todo.id} className='todo-text'>
+        <div className="todo-row" key={index}>
+            <div key={todo.id} className="todo-text">
                 {todo.text}
             </div>
-            <button
-                className="edit-btn"
-                onClick={() => setEdit({ id: todo.id, value: todo.text })}
-            >
-                Edit
-            </button>
-            <button className="delete-btn" onClick={() => removeTodo(todo.id)}>
-                Delete
-            </button>
+            <div className='todo-btn'>
+                <button
+                    className='edit-btn'
+                    onClick={() => setEdit({ id: todo.id, value: todo.text })}
+                >
+                    Edit
+                </button>
+                <button
+                    className='delete-btn'
+                    onClick={() => removeTodo(todo.id)}
+                >
+                    Delete
+                </button>
+            </div>
         </div>
     ));
 };

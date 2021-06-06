@@ -1,22 +1,23 @@
 import React, { useState } from "react";
+import "./TodoForm.css";
 
-const TodoForm = props => {
+const TodoForm = (props) => {
     const [input, setInput] = useState("");
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         setInput(e.target.value);
-    }
+    };
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         props.onSubmit({
             id: Math.floor(Math.random() * 10000),
-            text: input
+            text: input,
         });
 
-        setInput('')
-    }
+        setInput("");
+    };
 
     return (
         <form className="todo-form" onSubmit={handleSubmit}>
@@ -28,9 +29,9 @@ const TodoForm = props => {
                 className="todo-input"
                 onChange={handleChange}
             />
-            <button className='todo-button'>Submit</button>
+            <button className="todo-button">Submit</button>
         </form>
     );
-}
+};
 
 export default TodoForm;

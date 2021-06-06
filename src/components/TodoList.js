@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
+import './TodoList.css';
 
 const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
@@ -39,8 +40,7 @@ const TodoList = (props) => {
     // };
 
     return (
-        <div>
-            <h1>Plan</h1>
+        <div className='container'>
             <TodoForm onSubmit={addTodo} />
             <Todo
                 todos={todos}

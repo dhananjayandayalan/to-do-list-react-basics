@@ -1,12 +1,15 @@
 import React from "react";
-import './App.css';
+import "./App.css";
 import TodoList from "./components/TodoList";
 
 const App = () => {
     return (
-        <div className='todo-app'>
+        <React.Fragment>
+            <header class="title-header">
+                <h1>To Do List</h1>
+            </header>
             <TodoList />
-        </div>
+        </React.Fragment>
     );
 };
 
