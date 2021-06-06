@@ -27,16 +27,16 @@ const TodoList = (props) => {
         setTodos(removeArr);
     };
 
-    const completeTodo = (id) => {
-        let updatedTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                todo.isComplete = !todo.isComplete;
-            }
-            return todo;
-        });
+    // const completeTodo = (id) => {
+    //     let updatedTodos = todos.map((todo) => {
+    //         if (todo.id === id) {
+    //             todo.isComplete = !todo.isComplete;
+    //         }
+    //         return todo;
+    //     });
 
-        setTodos(updatedTodos);
-    };
+    //     setTodos(updatedTodos);
+    // };
 
     return (
         <div>
@@ -44,7 +44,7 @@ const TodoList = (props) => {
             <TodoForm onSubmit={addTodo} />
             <Todo
                 todos={todos}
-                completeTodos={completeTodo}
+                // completeTodos={completeTodo}
                 removeTodo={removeTodo}
                 updateTodo={updateTodo}
             />
