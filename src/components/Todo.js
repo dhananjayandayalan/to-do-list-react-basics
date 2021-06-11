@@ -20,27 +20,31 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         return <TodoForm edit={edit} onSubmit={submitUpdate} />;
     }
 
-    return todos.map((todo, index) => (
-        <div className="todo-row" key={index}>
-            <div key={todo.id} className="todo-text">
-                {todo.text}
+    return todos.map((todo, index) => {
+        return (
+            <div className="todo-row" key={index}>
+                <div key={todo.id} className="todo-text">
+                    {todo.text}
+                </div>
+                <div className="todo-btn">
+                    <button
+                        className="edit-btn"
+                        onClick={() =>
+                            setEdit({ id: todo.id, value: todo.text })
+                        }
+                    >
+                        Edit
+                    </button>
+                    <button
+                        className="delete-btn"
+                        onClick={() => removeTodo(todo.id)}
+                    >
+                        Delete
+                    </button>
+                </div>
             </div>
-            <div className='todo-btn'>
-                <button
-                    className='edit-btn'
-                    onClick={() => setEdit({ id: todo.id, value: todo.text })}
-                >
-                    Edit
-                </button>
-                <button
-                    className='delete-btn'
-                    onClick={() => removeTodo(todo.id)}
-                >
-                    Delete
-                </button>
-            </div>
-        </div>
-    ));
+        );
+    });
 };
 
 export default Todo;

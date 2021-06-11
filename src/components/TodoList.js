@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
-import './TodoList.css';
+import "./TodoList.css";
+
+const retreivedObject = localStorage.getItem("todoDB");
+let retrieved = JSON.parse(retreivedObject);
+if (retrieved === null) {
+    localStorage.setItem("todoDB", JSON.stringify([]));
+    retrieved = JSON.parse(localStorage.getItem("todoDB"));
+}
 
 const TodoList = (props) => {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState(retrieved ? retrieved : []);
 
     const addTodo = (todo) => {
         if (!todo.text || /^\s*$/.test(todo.text)) {
             return;
         }
-        setTodos((prevTodo) => [todo, ...prevTodo]);
+        setTodos((prev) => [todo, ...prev]);
+        retrieved = [todo, ...todos];
+        localStorage.setItem("todoDB", JSON.stringify(retrieved));
     };
 
     const updateTodo = (todoId, newValue) => {
@@ -19,13 +28,16 @@ const TodoList = (props) => {
         }
 
         setTodos((prev) =>
-            prev.map((item) => (item.id === todoId ? newValue : item))
+            prev.map((item) => item.id === todoId ? newValue : item)
         );
-    };
 
+        localStorage.setItem('todoDB', JSON.stringify(retrieved));
+    };
     const removeTodo = (id) => {
         const removeArr = [...todos].filter((todo) => todo.id !== id);
-        setTodos(removeArr);
+        setTodos(() => [...removeArr]);
+        retrieved = [...removeArr];
+        localStorage.setItem("todoDB", JSON.stringify(retrieved));
     };
 
     // const completeTodo = (id) => {
@@ -40,7 +52,7 @@ const TodoList = (props) => {
     // };
 
     return (
-        <div className='container'>
+        <div className="container">
             <TodoForm onSubmit={addTodo} />
             <Todo
                 todos={todos}
