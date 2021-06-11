@@ -5,7 +5,7 @@ import TodoList from "./components/TodoList";
 const App = () => {
     return (
         <React.Fragment>
-            <header class="title-header">
+            <header className="title-header">
                 <h1>To Do List</h1>
             </header>
             <TodoList />
